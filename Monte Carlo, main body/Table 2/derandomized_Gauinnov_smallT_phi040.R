@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <- 15
+iH <- 15 # Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 vSeeds = sample(1:1e5, iH, replace = FALSE)
@@ -16,30 +16,34 @@ for (h in 1:iH) {
 iM = 1000 # Number of MC samples
 
 
-vN = c(100, 200, 500)
-vT = c(100, 200, 300, 500)
+vN = c(100, 200, 500) # Cross-sectional sizes
+vT = c(100, 200, 300, 500) # Temporal sizes
 
+
+# Load the data. Change according to your working directory
 sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data/Power/"
-
-dAlpha = 0.05
-
-dNu <- 5
-dQ = 1/4
-
 sType = "power"
+load(paste(sPathData, sType, "LatentFactor_PhiNu040.Rdata", sep = ""))
+
+
+dAlpha = 0.05 # Level of the one-shot tests
+dNu <- 5 # Power of psii
+dQ = 1/4 # Power for f(B)
+
+# PRe-allocation matricces for rejeciton frequencies using different thresholds
 mRes1 = matrix(0.0, ncol = length(vT), nrow = length(vN))
 mRes2 = matrix(0.0, ncol = length(vT), nrow = length(vN))
-load(paste(sPathData, sType, "LatentFactor_PhiNu040.Rdata", sep = ""))
 for(n  in 1:length(vN)){
   iN = vN[n]
-  iB = (floor(log(iN)^2))
+  iB = (floor(log(iN)^2)) # Number of trials for each Monte Carlo sample
 
   mZ = matrix(0.0, nrow = iM, ncol =iB)
 
-  lAB = get_AB(iN)
-  dC = get_criticalValues_ultimate(lAB$A, lAB$B, dAlpha)
+  lAB = get_AB(iN) # Normalizing sequences for EVT asymptotics
+  dC = get_criticalValues_ultimate(lAB$A, lAB$B, dAlpha) # Critical values
   lFoo = lData[[n]]
 
+  # LIL and non-LIL based thresholds
   dCritic1 = (1.0-dAlpha) - sqrt(dAlpha*(1.0-dAlpha))*sqrt(2.0*log(log(iB))/iB)
   dCritic2 = (1.0-dAlpha) - iB^(-dQ)
 
@@ -57,10 +61,12 @@ for(n  in 1:length(vN)){
       }, lFoo1 = lFoo1)
     }
 
+    # Calculate Q across Monte Carlo samples
     vQ = sapply(1:iM, function(m){mean(mZ[m, ]<=dC)})
+
+    # Store rejection frequencies
     mRes1[n, j] = mean(vQ < dCritic1)
     mRes2[n, j] = mean(vQ < dCritic2)
-    print(c(iT, iN, mRes1[n, j], mRes2[n, j]))
   }
 }
 
