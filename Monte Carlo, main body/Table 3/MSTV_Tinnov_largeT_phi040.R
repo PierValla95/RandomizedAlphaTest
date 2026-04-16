@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <-20
+iH <-20 #  Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 clusterEvalQ(cluster, {
@@ -16,12 +16,12 @@ iM = 1000 # Number of MC samples
 vIntF = c(0.53, 0.19, 0.19)
 mPhi = diag(c(-0.1, 0.2, -0.2))
 
-vN = c(100, 200, 500)
-vT = c(1000, 2000)
+vN = c(100, 200, 500) # Cross-sectional sizes
+vT = c(1000, 2000) # Temporal sizes
 iT.max = max(vT)
 
-dNu = 5
-dAlpha = 0.05
+dNu = 5 # Power of psi
+dAlpha = 0.05 # Level of the test
 
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 
@@ -52,7 +52,6 @@ for(n in seq_along(vN)){
     # Store rejection frequencies
     mRej[n,j] = mean(vZ > dC)
   }
-  print(mRej)
 }
 
 stopCluster(cluster)
