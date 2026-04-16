@@ -19,10 +19,11 @@ iM = 1000 # Number of MC samples
 
 dNu = 5 # power for psi
 
-vN = c(100, 200, 500)
-vT = c(100, 200, 300, 500)
+vN = c(100, 200, 500) # Cross-sectional sizes
+vT = c(100, 200, 300, 500) # Temporal sizes
 
 
+# Load data. Change according to your working directory
 sType = "size"
 sType = "power"
 
@@ -33,24 +34,28 @@ if(sType == "power"){
 }
 load(paste(sPathData, sType, "LatentFactor_PhiNu040_T.Rdata", sep = ""))
 
+# Pre-allocation matrix for rejection frequencies
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 
 
 for(n  in 1:length(vN)){
   iN = vN[n]
   lFoo = lData[[n]]
-  lAB = get_AB(iN)
-  dC = get_criticalValues_ultimate(lAB$A, lAB$B, dAlpha)
+  lAB = get_AB(iN) # Normalizing sequences for EVT asymptotics
+  dC = get_criticalValues_ultimate(lAB$A, lAB$B, dAlpha) # Critical values
   for(j in 1:length(vT)){
     iT = vT[j]
     dTeff = iT^(1/dNu)
     clusterExport(cl =cluster, c("dNu", "dTeff", "iT"))
+
+    # Calculate test statistics across MC samples
     vZ = parSapply(cl = cluster, seq(iM), function(m, lFoo){
       set.seed(m)
       return(get_testStat.fast(lFoo[[m]]$Y[, 1:iT], lFoo[[m]]$X[, 1:iT], dNu, dTeff))
       }, lFoo = lFoo)
+
+    # Store rejection frequencies
     mRej[n,j] = mean(vZ > dC)
-    print(c(iN, iT, mRej[n,j]))
   }
 }
 
