@@ -14,7 +14,7 @@ sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data
 # Load the data
 load(paste(sPathData, sType, "LatentFactor_PhiNu040_T.Rdata", sep = ""))
 
-
+# Pre-allocation matrix for rejection frequencies
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 for(n  in 1:length(vN)){
   iN = vN[n]
