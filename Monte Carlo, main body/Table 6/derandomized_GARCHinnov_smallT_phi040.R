@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <- 15 # Numbr of cores
+iH <- 5 # Numbr of cores
 set.seed(150)
 cluster = makeCluster(iH)
 vSeeds = sample(1:1e5, iH, replace = FALSE)
@@ -70,6 +70,8 @@ for(n  in 1:length(vN)){
     # Store rejection frequencies
     mRes1[n, j] = mean(vQ < dCritic1)
     mRes2[n, j] = mean(vQ < dCritic2)
+    print(mRes1)
+    print(mRes2)
   }
 }
 
