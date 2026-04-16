@@ -56,7 +56,6 @@ for(n  in 1:length(vN)){
 
     # Store rejectionf requencies
     mRej[n,j] = mean(vZ > dC)
-    print(c(iN, iT, mRej[n,j]))
   }
 }
 
