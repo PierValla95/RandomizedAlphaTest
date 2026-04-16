@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <- 10
+iH <- 10 # Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 vSeeds = sample(1:1e5, iH, replace = FALSE)
@@ -16,12 +16,12 @@ for (h in 1:iH) {
 
 iM = 1000 # Number of MC samples
 vN = c(100, 200, 500) #Cross-sectional sizes
-vT = c(100, 200, 300, 500) # Temporal sizes
+vT = c(100, 200, 300, 400, 500) # Temporal sizes
 
 
 # Repository, change according to your PC
-sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data/Power/"
-sType = "power"
+sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data/Size/"
+sType = "Size"
 
 
 dC = qcauchy(0.95) # Critical value
@@ -43,7 +43,6 @@ for(n  in 1:length(vN)){
     }, lFoo=lFoo, iT = iT)
     # Store rejection frequencies
     mRej[n,j] = mean(vTstat > dC)
-    print(c(iN, iT, mRej[n,j]))
   }
 }
 
