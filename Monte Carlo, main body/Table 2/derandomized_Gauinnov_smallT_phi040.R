@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <- 15
+iH <- 15 #Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 vSeeds = sample(1:1e5, iH, replace = FALSE)
@@ -24,7 +24,7 @@ sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data
 sType = "power"
 load(paste(sPathData, sType, "LatentFactor_PhiNu040.Rdata", sep = ""))
 
-dAlpha = 0.05 # Level of the one-shot test
+dAlpha = 0.05 # Level of the one-shot tests
 dNu <- 5 # Power for psi
 dQ = 1/4 # Power for f(B) in the modified threshold
 
@@ -62,12 +62,12 @@ for(n  in 1:length(vN)){
       }, lFoo1 = lFoo1)
     }
 
+    # Create a vector of Qs across Monte Carlo samples
     vQ = sapply(1:iM, function(m){mean(mZ[m, ]<=dC)})
 
     # Store rejection frequencies for both thresholds
     mRes1[n, j] = mean(vQ < dCritic1)
     mRes2[n, j] = mean(vQ < dCritic2)
-    print(c(iT, iN, mRes1[n, j], mRes2[n, j]))
   }
 }
 
