@@ -26,10 +26,7 @@ vN = c(100, 200, 500) # Cross-sectional sizes
 vT = c(1000, 2000) # Temporal sizes
 iT.max = max(vT)
 
-
-dAlpha = 0.05
-
-
+# Pre-allocation matrix for rejection frequencies
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 for(n in seq_along(vN)){
   iN = vN[n]
