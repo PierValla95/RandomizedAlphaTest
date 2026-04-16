@@ -16,7 +16,7 @@ for (h in 1:iH) {
 
 iM = 1000 # Number of MC samples
 vN = c(100, 200, 500) #Cross-sectional sizes
-vT = c(100, 200, 300, 400, 500) # Temporal sizes
+vT = c(100, 200, 300, 500) # Temporal sizes
 
 
 # Repository, change according to your PC
@@ -43,7 +43,6 @@ for(n  in 1:length(vN)){
 
     # Store rejection frequencies
     mRej[n,j] = mean(vZ > dC)
-    print(c(iN, iT, mRej[n,j]))
   }
 }
 
