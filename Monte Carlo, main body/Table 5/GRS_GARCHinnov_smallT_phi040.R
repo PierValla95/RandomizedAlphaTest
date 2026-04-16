@@ -14,7 +14,7 @@ sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data
 # Load the data
 load(paste(sPathData, sType, "LatentFactor_PhiNu040_garch.Rdata", sep = ""))
 
-
+# Pre-allocation matrix for rejection frequencies
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 for(n  in 1:length(vN)){
   iN = vN[n]
@@ -33,7 +33,6 @@ for(n  in 1:length(vN)){
 
       # Store rejection frequencies
       mRej[n,j] = mean(vZ > dC)
-      print(c(iN, iT, mRej[n,j]))
     } else {
       mRej[n,j] = 0.0
     }
