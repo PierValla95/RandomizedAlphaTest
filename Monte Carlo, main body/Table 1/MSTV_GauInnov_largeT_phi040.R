@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <-20
+iH <-210 # Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 clusterEvalQ(cluster, {
@@ -21,7 +21,7 @@ vT = c(1000, 2000) # Temporal sizes
 iT.max = max(vT)
 
 dNu = 5 # Exponent of psi
-dAlpha = 0.05
+dAlpha = 0.05 # Level of the test
 
 # Pre-allocaton matrix
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
@@ -53,7 +53,6 @@ for(n in seq_along(vN)){
     # Store rejection frequencies
     mRej[n,j] = mean(vZ > dC)
   }
-  print(mRej)
 }
 
 stopCluster(cluster)
