@@ -25,18 +25,21 @@ vN = c(100, 200, 500) # Cross-sectional sizes
 vT = c(1000, 2000) # Temporal sizes
 iT.max = max(vT)
 
-dAlpha = 0.05
+dC = qnorm(0.95) # Critical value
 
-dC = qnorm(0.95)
+# Pre-allocation matrix for rejection frequencies
 mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 
 for(n in seq_along(vN)){
   iN = vN[n]
+
+    # Simulate data, use "size" for the null and "power" for the alternative
   lInput = list(iK = iK, iN = iN, iT = iT.max, Phi = mPhi, Type="size",
                 PhiNu = 0.40, vIntF = vIntF, dPerc = 0.95)
-
   lData = get_data_latentFactor_T.bis(lInput)
   clusterExport(cl =cluster, "lData")
+
+  
   for(j in seq_along(vT)){
     iT = vT[j]
     clusterExport(cl =cluster, "iT")
@@ -50,7 +53,6 @@ for(n in seq_along(vN)){
     # Store rejection frequencies
     mRej[n,j] = mean(vZ > dC)
   }
-  print(mRej)
 }
 
 
