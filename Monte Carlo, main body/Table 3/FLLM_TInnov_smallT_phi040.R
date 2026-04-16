@@ -15,15 +15,16 @@ for (h in 1:iH) {
 }
 iM = 1000 # Number of MC samples
 
-vN = c(100, 200, 500)
-vT = c(100, 200, 300, 500)
+vN = c(100, 200, 500) # Cross-sectional sizes
+vT = c(100, 200, 300, 500) # Temporal sizes
 
+# Path for the simulate data, change according to your settings
 sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data/Size/"
 sType = "Size"
-
-dC = get_criticalValuesFLLM(0.05)
-mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
 load(paste(sPathData, sType, "LatentFactor_PhiNu040_T.Rdata", sep = ""))
+
+dC = get_criticalValuesFLLM(0.05) # Critical values
+mRej = matrix(0.0, ncol = length(vT), nrow = length(vN)) # pre-allocation matrix
 
 for(n  in 1:length(vN)){
   iN = vN[n]
@@ -32,16 +33,17 @@ for(n  in 1:length(vN)){
   for(j in 1:length(vT)){
     iT = vT[j]
 
+    # Calculate test statistics
     vZ = parSapply(cl=cluster, 1:iM, function(m, lFoo, iT){
-      get_testStatFLLM(lFoo[[m]]$Y[, 1:iT], lFoo[[m]]$X[, 1:iT])
-    }, lFoo = lFoo, iT = iT)
+          get_testStatFLLM(lFoo[[m]]$Y[, 1:iT], lFoo[[m]]$X[, 1:iT])
+        }, lFoo = lFoo, iT = iT)
 
-
+    # Store rejection frequencies
     mRej[n,j] = mean(vZ  - 2.0*log(iN) + log(log(iN))> dC)
-    print(c(iN, iT, mRej[n,j]))
   }
 }
 
+mRej # print matrix of rejection frequencies
 
 stopCluster(cluster)
 rm(list=ls())
