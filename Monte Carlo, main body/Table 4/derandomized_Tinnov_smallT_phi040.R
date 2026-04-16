@@ -19,7 +19,7 @@ iM = 1000 # Number of MC samples
 vN = c(100, 200, 500) # Cross-sectional sizes
 vT = c(100, 200, 300, 500) # Temporal sizes
 
-# Load teh data. Change accoridng tyour working directory
+# Load the data. Change according to your working directory
 sPathData = "C:/Users/pierl/Dropbox/Massacci_Sarno_Trapani2/Simulations/sim_data/Size/"
 sType = "Size"
 load(paste(sPathData, sType, "LatentFactor_PhiNu040_T.Rdata", sep = ""))
