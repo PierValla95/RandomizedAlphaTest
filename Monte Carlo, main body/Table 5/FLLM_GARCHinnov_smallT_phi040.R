@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <- 10
+iH <- 10 # Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 vSeeds = sample(1:1e5, iH, replace = FALSE)
@@ -40,10 +40,8 @@ for(n  in 1:length(vN)){
       get_testStatFLLM(lFoo[[m]]$Y[, 1:iT], lFoo[[m]]$X[, 1:iT])
     }, lFoo = lFoo, iT = iT)
 
-
     # Store rejection frequency
     mRej[n,j] = mean(vZ  - 2.0*log(iN) + log(log(iN))> dC)
-    print(c(iN, iT, mRej[n,j]))
   }
 }
 
