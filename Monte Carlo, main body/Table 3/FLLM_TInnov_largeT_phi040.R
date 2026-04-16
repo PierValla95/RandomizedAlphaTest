@@ -2,7 +2,7 @@ library(RandAlphaTest)
 library(parallel)
 
 # For parallel computing
-iH <-5
+iH <-5 # Number of cores
 set.seed(150)
 cluster = makeCluster(iH)
 vSeeds = sample(1:1e5, iH, replace = FALSE)
@@ -17,7 +17,7 @@ for (h in 1:iH) {
 iK = 3 # Number of factors
 iM = 1000 # Number of MC samples
 
-# Parameters for Factors DGP and related GARCH models
+# Parameters for Factors DGP 
 vIntF = c(0.53, 0.19, 0.19)
 mPhi = diag(c(-0.1, 0.2, -0.2))
 
@@ -25,17 +25,16 @@ vN = c(100, 200, 500) # Cross-sectional sizes
 vT = c(1000, 2000) # Temporal sizes
 iT.max = max(vT)
 
-dAlpha = 0.05
-
-
-dC = get_criticalValuesFLLM(dAlpha)
-mRej = matrix(0.0, ncol = length(vT), nrow = length(vN))
+dAlpha = 0.05 # level of the test
+dC = get_criticalValuesFLLM(dAlpha) # Critical values
+mRej = matrix(0.0, ncol = length(vT), nrow = length(vN)) # Pre-allocation matrix for rejection frequencies
 
 for(n in seq_along(vN)){
   iN = vN[n]
-  lInput = list(iK = iK, iN = iN, iT = iT.max, Phi = mPhi, Type="size",
+  
+  # Simulate data. Use Type = "size" for under the null and Type = "power" for the alternative
+  lInput = list(iK = iK, iN = iN, iT = iT.max, Phi = mPhi, Type="power",
                 PhiNu = 0.40, vIntF = vIntF, dPerc = 0.95)
-
   lData = get_data_latentFactor_T.bis(lInput)
   clusterExport(cl =cluster, "lData")
   for(j in seq_along(vT)){
@@ -46,12 +45,11 @@ for(n in seq_along(vN)){
     vZ = parSapply(cl = cluster, seq(iM), function(m){
       set.seed(m)
       return(get_testStatFLLM(lData[[m]]$Y[, 1:iT], lData[[m]]$X[, 1:iT]))
-    })
+      })
 
     # Store rejection frequencies
     mRej[n,j] = mean(vZ  - 2.0*log(iN) + log(log(iN)) > dC)
   }
-  print(mRej)
 }
 
 
