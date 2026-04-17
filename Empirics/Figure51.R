@@ -116,7 +116,7 @@ for(i in 5:3){
 
 
   windows(5, 5)
-  plot(vDates.plot, sqrt(mVar.fiveLargest[, i]), xaxt = "n", type = "n", lwd = 2, las = 1,,
+  plot(vDates.plot, sqrt(mVar.fiveLargest[, i]), xaxt = "n", type = "n", lwd = 2, las = 1,
        xlab = "", ylab = "")
   axis(1, at = x_ticks, labels = x_labels)
   grid()
