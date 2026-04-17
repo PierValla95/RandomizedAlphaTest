@@ -30,6 +30,7 @@ mFF = read.csv(paste(sPath, "FF_Data_new.csv", sep = ""), sep = ";")
 # Align dates
 iIdx.low = which(vDates == "1985-01-01")
 mRet = mRet[(iIdx.low):nrow(mRet), ]
+mFF = mFF[(iIdx.low):nrow(mFF), ]
 
 iR = 60 # Length of the window
 iK = nrow(mRet) - iR +1
