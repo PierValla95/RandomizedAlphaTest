@@ -33,7 +33,7 @@ mRet = mRet[(iIdx.low):nrow(mRet), ]
 
 iR = 60 # Length of the window
 iK = nrow(mRet) - iR +1
-dNu = 4 # Value of nu in the test statistics
+dNu = 5 # Value of nu in the test statistics
 dAlpha = 0.05 #Significance level
 
 # Pre allocation
