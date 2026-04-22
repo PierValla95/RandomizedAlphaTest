@@ -6,4 +6,4 @@ The folder "Empirics" contains codes and data to replicate Table 5.1 and Figure 
 
 All folders have their own README file that explains their functioning.
 
-The replication package relies on the R package RandAlphaTest. The package can be installed by downloading the tarball file contained in the R_package folder. Installation then runs with usual install.packages() function. This version of the package was last updated on April 16, 2026, using  version 4.4.3 of R.
+The replication package relies on the R package RandAlphaTest. The package can be installed by downloading the tarball file contained in the R_package folder. Installation then runs with the usual install.packages() function, with the appropriate command for installing from a source file. This version of the package was last updated on April 16, 2026, using  version 4.4.3 of R. Its installation requires the packages "Rtools" and "Rcpp".
