@@ -36,7 +36,7 @@ Retrieved from the website of Professor Kenneth French  (https://mba.tuck.dartmo
 
 **Description:**  
 Monthly values of the Fama French factors and the risk-free rate used in our analysis.
-Loading this dataset returns a list of 8 elements. 
+Loading this dataset returns a list of eight elements. 
 
   - The first object is called "X" and is a vector of integers representing dates as yyyymmdd;
   - The second one is called "Mkt.RF" and contains market excess returns in percentage points (continuous variable);
@@ -45,7 +45,7 @@ Loading this dataset returns a list of 8 elements.
   - The fifth one is called "RMW" and contains values of the profitability factor in percentage points (continuous variable);
   - The sixth one is called "CMA" and contains values of the investment strategy factor in percentage points (continuous variable);
   - The seventh one is called "RF" and contains values of the risk-free rate in percentage points (continuous variable);
-  - The eight one is called "MOM" and contains values of the momentum factor in percentage points (continuous variable);
+  - The eighth one is called "MOM" and contains values of the momentum factor in percentage points (continuous variable);
     
 ### Variable tarsnformations
 
