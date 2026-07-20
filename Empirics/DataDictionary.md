@@ -47,7 +47,7 @@ Loading this dataset returns a list of eight elements.
   - The seventh one is called "RF" and contains values of the risk-free rate in percentage points (continuous variable);
   - The eighth one is called "MOM" and contains values of the momentum factor in percentage points (continuous variable);
     
-### Variable tarsnformations
+### Variable transformations
 
 The empirical analysis uses the Fama French factors as they are (and hence, as downloaded from the relevant sources). Since the factor models that we test
 use excess returns as dependent variables, the risk-free rate is subtracted from  the gross returns imported from the .Rdata file.
