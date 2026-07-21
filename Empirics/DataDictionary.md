@@ -3,7 +3,7 @@
 ## 1. Purpose
 
 This document describes the datasets used in the reproducibility materials for the paper "A general randomized test for alpha" written by
-Daniele Massacci, Daniele Massacci, Lucio Sarno, Lorenzo Trapani, and Pierluigi Vallarino.
+Daniele Massacci, Lucio Sarno, Lorenzo Trapani, and Pierluigi Vallarino.
 
 ## 2. Data files
 
